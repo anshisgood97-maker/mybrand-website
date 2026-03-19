@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MyBrand Premium</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:#0a0a0a;color:#fff;overflow-x:hidden;}
+
+header{display:flex;justify-content:space-between;align-items:center;padding:15px 50px;background:rgba(0,0,0,0.8);backdrop-filter:blur(10px);position:sticky;top:0;z-index:1000;}
+.logo{font-size:28px;font-weight:800;color:#ffcc00;}
+nav a{margin:0 15px;text-decoration:none;color:#fff;font-weight:600;position:relative;}
+nav a::after{content:"";position:absolute;width:0;height:2px;background:#ffcc00;left:0;bottom:-5px;transition:0.3s;}
+nav a:hover::after{width:100%;}
+
+.hero{height:100vh;background:url('https://images.unsplash.com/photo-1605902711622-cfb43c44367f?q=80&w=1600') center/cover;display:flex;align-items:center;padding:80px;position:relative;}
+.hero::after{content:"";position:absolute;width:100%;height:100%;background:linear-gradient(to right,rgba(0,0,0,0.9),rgba(0,0,0,0.4));}
+.hero::before{content:"";position:absolute;width:200%;height:200%;background:radial-gradient(circle,#ffcc0020 1px,transparent 1px);background-size:40px 40px;animation:moveBg 15s linear infinite;}
+.hero-text{position:relative;max-width:650px;animation:fadeUp 1s ease;z-index:2;}
+.hero h1{font-size:65px;font-weight:800;text-shadow:0 0 25px rgba(255,204,0,0.5);}
+.hero p{font-size:20px;margin-top:10px;color:#ccc;}
+.hero button{margin-top:25px;padding:14px 30px;border:none;background:#ffcc00;font-weight:700;cursor:pointer;border-radius:8px;transition:0.3s;}
+.hero button:hover{transform:scale(1.1);box-shadow:0 0 25px #ffcc00;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(50px);}to{opacity:1;}}
+@keyframes moveBg{from{transform:translate(0,0);}to{transform:translate(-150px,-150px);}}
+
+.title{text-align:center;font-size:32px;margin:40px 0;color:#ffcc00;}
+
+.categories,.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:25px;padding:50px;}
+
+.cat{height:220px;border-radius:15px;display:flex;align-items:flex-end;padding:20px;font-size:20px;font-weight:700;background-size:cover;background-position:center;position:relative;overflow:hidden;transition:0.4s;}
+.cat::after{content:"";position:absolute;width:100%;height:100%;background:rgba(0,0,0,0.5);} 
+.cat span{position:relative;z-index:2;}
+.cat:hover{transform:scale(1.08);box-shadow:0 0 25px #ffcc00;}
+
+.card{background:#111;border-radius:15px;overflow:hidden;transition:0.4s;}
+.card:hover{transform:translateY(-12px) scale(1.02);box-shadow:0 0 30px rgba(255,204,0,0.4);}
+.card img{width:100%;height:200px;object-fit:cover;}
+.card h3{padding:10px;color:#ffcc00;}
+.card p{padding:0 10px;color:#bbb;font-size:14px;}
+.card button{margin:12px;padding:12px;width:calc(100% - 24px);border:none;background:#ffcc00;font-weight:700;cursor:pointer;border-radius:6px;transition:0.3s;}
+.card button:hover{box-shadow:0 0 20px #ffcc00;transform:scale(1.05);}
+
+.contact{text-align:center;padding:50px;line-height:28px;}
+
+.call-btn{position:fixed;bottom:20px;right:20px;background:#ffcc00;color:black;padding:16px;border-radius:50%;font-size:20px;box-shadow:0 0 20px #ffcc00;animation:pulse 1.5s infinite;}
+@keyframes pulse{0%{transform:scale(1);}50%{transform:scale(1.2);}100%{transform:scale(1);}}
+
+#orderForm{display:none;position:fixed;width:100%;height:100%;background:rgba(0,0,0,0.9);justify-content:center;align-items:center;}
+.form-box{background:#111;padding:25px;width:320px;border-radius:12px;box-shadow:0 0 25px rgba(255,204,0,0.3);animation:fadeUp 0.4s;}
+.form-box input,.form-box textarea{width:100%;margin:8px 0;padding:10px;background:#000;border:1px solid #333;color:#fff;border-radius:5px;}
+.form-box button{margin-top:10px;padding:12px;width:100%;border:none;background:#ffcc00;color:black;font-weight:700;border-radius:6px;}
+
+footer{background:#000;text-align:center;padding:20px;color:#aaa;}
+</style>
+</head>
+
+<body>
+<header>
+<div class="logo">MyBrand</div>
+<nav>
+<a href="#home">Home</a>
+<a href="#products">Products</a>
+<a href="#contact">Contact</a>
+</nav>
+</header>
+
+<section class="hero" id="home">
+<div class="hero-text">
+<h1>Premium Raw Materials</h1>
+<p>Fast Delivery • Trusted Quality</p>
+<button onclick="scrollToProducts()">Explore</button>
+</div>
+</section>
+
+<h2 class="title">Categories</h2>
+<section class="categories">
+<div class="cat" style="background:url('https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800')"><span>Fabrics</span></div>
+<div class="cat" style="background:url('https://images.unsplash.com/photo-1581093588401-22d0b3baf5c0?q=80&w=800')"><span>Chemicals</span></div>
+<div class="cat" style="background:url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800')"><span>Electronics</span></div>
+<div class="cat" style="background:url('https://images.unsplash.com/photo-1606788075761-2c7c8a0cbd3c?q=80&w=800')"><span>Spices</span></div>
+</section>
+
+<h2 class="title" id="products">Products</h2>
+<section class="grid">
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?q=80&w=800">
+<h3>Fabric Rolls</h3>
+<p>High quality textile material</p>
+<button onclick="openForm('Fabric Rolls')">Order</button>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1581092919534-7c8c2b3d4e89?q=80&w=800">
+<h3>Industrial Chemicals</h3>
+<p>Bulk chemical supply</p>
+<button onclick="openForm('Chemicals')">Order</button>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=800">
+<h3>Electronic Parts</h3>
+<p>Raw electronic components</p>
+<button onclick="openForm('Electronics')">Order</button>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?q=80&w=800">
+<h3>Natural Spices</h3>
+<p>Fresh organic spices</p>
+<button onclick="openForm('Spices')">Order</button>
+</div>
+
+</section>
+
+<section class="contact" id="contact">
+<h2>Contact</h2>
+<p>Ansh Dubey</p>
+<p>9026475553</p>
+<p>mybrand4@gmail.com</p>
+</section>
+
+<a href="tel:9026475553" class="call-btn">📞</a>
+
+<div id="orderForm">
+<div class="form-box">
+<h3>Order</h3>
+<input id="name" placeholder="Name">
+<input id="phone" placeholder="Phone">
+<textarea id="address" placeholder="Address"></textarea>
+<button onclick="sendOrder()">Send</button>
+<button onclick="closeForm()">Cancel</button>
+</div>
+</div>
+
+<footer>© 2026 MyBrand</footer>
+
+<script>
+let selectedItem="";
+function scrollToProducts(){document.getElementById("products").scrollIntoView({behavior:"smooth"});}
+function openForm(item){selectedItem=item;document.getElementById("orderForm").style.display="flex";}
+function closeForm(){document.getElementById("orderForm").style.display="none";}
+function sendOrder(){let name=document.getElementById("name").value;let phone=document.getElementById("phone").value;let address=document.getElementById("address").value;if(!name||!phone||!address){alert("Fill all details!");return;}window.open(`https://wa.me/919026475553?text=Order:${selectedItem}%0AName:${name}%0APhone:${phone}%0AAddress:${address}`);alert("Order Sent
