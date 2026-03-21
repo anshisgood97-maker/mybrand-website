@@ -5,144 +5,205 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MyBrand Premium</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
-
+<script src="https://cdn.jsdelivr.net/npm/tsparticles@3.6.0/tsparticles.bundle.min.js"></script>
 <style>
+:root{
+  --gold:#ffd966;
+  --dark:#111;
+  --light:#f5f5f5;
+  --hover:#333;
+  --gradient:linear-gradient(90deg,#ffd966,#ffcc00);
+  --rgb1:#ff4d4d;
+  --rgb2:#4dff4d;
+  --rgb3:#4d4dff;
+}
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-body{background:#0a0a0a;color:#fff;overflow-x:hidden;}
-
-header{display:flex;justify-content:space-between;align-items:center;padding:15px 50px;background:rgba(0,0,0,0.8);backdrop-filter:blur(10px);position:sticky;top:0;z-index:1000;}
-.logo{font-size:28px;font-weight:800;color:#ffcc00;}
-nav a{margin:0 15px;text-decoration:none;color:#fff;font-weight:600;position:relative;}
-nav a::after{content:"";position:absolute;width:0;height:2px;background:#ffcc00;left:0;bottom:-5px;transition:0.3s;}
-nav a:hover::after{width:100%;}
-
-.hero{height:100vh;background:url('https://images.unsplash.com/photo-1605902711622-cfb43c44367f?q=80&w=1600') center/cover;display:flex;align-items:center;padding:80px;position:relative;}
-.hero::after{content:"";position:absolute;width:100%;height:100%;background:linear-gradient(to right,rgba(0,0,0,0.9),rgba(0,0,0,0.4));}
-.hero::before{content:"";position:absolute;width:200%;height:200%;background:radial-gradient(circle,#ffcc0020 1px,transparent 1px);background-size:40px 40px;animation:moveBg 15s linear infinite;}
-.hero-text{position:relative;max-width:650px;animation:fadeUp 1s ease;z-index:2;}
-.hero h1{font-size:65px;font-weight:800;text-shadow:0 0 25px rgba(255,204,0,0.5);}
-.hero p{font-size:20px;margin-top:10px;color:#ccc;}
-.hero button{margin-top:25px;padding:14px 30px;border:none;background:#ffcc00;font-weight:700;cursor:pointer;border-radius:8px;transition:0.3s;}
-.hero button:hover{transform:scale(1.1);box-shadow:0 0 25px #ffcc00;}
-
+body{background:#0a0a0a;color:#fff;overflow-x:hidden;transition:0.3s;}
+.cursor{position:fixed;width:16px;height:16px;border-radius:50%;background:var(--gold);pointer-events:none;mix-blend-mode:difference;z-index:9999;transition:0.1s;}
+header{display:flex;justify-content:space-between;padding:20px 40px;position:fixed;width:100%;background:rgba(0,0,0,0.7);z-index:999;transition:0.3s;}
+.logo{color:var(--gold);font-size:28px;font-weight:800;}
+nav a{color:#fff;margin:0 12px;text-decoration:none;font-weight:600;transition:0.3s;}
+nav a:hover{color:var(--gold);}
+.theme-toggle{cursor:pointer;color:var(--gold);font-weight:600;}
+.service-strip{text-align:center;padding:10px;background:var(--rgb2);color:#000;font-weight:600;}
+.hero{position:relative;height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 20px;overflow:hidden;}
+.hero h1{font-size:60px;max-width:800px;text-shadow:0 0 25px var(--gold);animation:fadeUp 1s ease;z-index:2;position:relative;}
+#tsparticles{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;}
+.trust-strip{text-align:center;padding:12px;background:var(--dark);color:var(--gold);font-size:14px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:25px;padding:60px;transition:0.3s;}
+.card{background:var(--dark);border-radius:16px;overflow:hidden;transition:0.5s cubic-bezier(0.22,1,0.36,1);position:relative;opacity:0;transform:translateY(40px);}
+.card.show{opacity:1;transform:translateY(0);}
+.card:hover{transform:scale(1.05);box-shadow:0 0 25px var(--rgb1),0 0 50px var(--rgb2);}
+.card img{width:100%;height:200px;object-fit:cover;transition:0.5s;}
+.card img:hover{transform:scale(1.05);}
+.card h3{padding:15px;color:var(--gold);}
+.card p{padding:0 15px;color:#ccc;}
+.card button{margin:15px;padding:12px;width:calc(100% - 30px);border:none;background:linear-gradient(90deg,var(--rgb1),var(--rgb2),var(--rgb3));border-radius:8px;cursor:pointer;font-weight:700;transition:0.3s;color:#000;}
+.card button:hover{filter:brightness(1.3);}
+.card button:active{transform:scale(0.92);}
+.tag{position:absolute;top:10px;left:10px;background:var(--gold);color:#000;padding:4px 10px;font-size:12px;border-radius:5px;}
+.tag2{position:absolute;top:10px;right:10px;background:red;padding:4px 10px;font-size:11px;border-radius:5px;}
+.countdown{position:absolute;bottom:10px;left:10px;background:red;color:#fff;padding:4px 8px;font-size:11px;border-radius:5px;}
+.reviews{padding:80px 60px;}
+.review-card{background:var(--dark);padding:20px;border-radius:12px;margin-bottom:15px;transition:0.3s;}
+.review-card:hover{box-shadow:0 0 20px var(--rgb3);}
+.stars{color:var(--gold);}
+.load-more{margin:15px auto;display:block;padding:10px 20px;background:linear-gradient(90deg,var(--rgb1),var(--rgb2),var(--rgb3));border:none;border-radius:8px;cursor:pointer;font-weight:700;color:#000;}
+.float-box{position:fixed;right:20px;display:flex;align-items:center;gap:8px;background:var(--dark);padding:10px 15px;border-radius:30px;cursor:pointer;z-index:998;transition:0.2s;}
+.float-box:hover{background:var(--hover);}
+.chat-box{bottom:90px;}
+.call-box{bottom:20px;}
+#chatbot{position:fixed;right:20px;bottom:300px;width:300px;background:var(--dark);border-radius:12px;overflow:hidden;display:none;flex-direction:column;z-index:999;}
+#chatbot .header{background:var(--gold);color:#000;padding:12px;font-weight:700;}
+#chatMessages{flex:1;padding:10px;overflow-y:auto;max-height:250px;color:#fff;font-size:14px;}
+#chatInput{padding:10px;border:none;width:100%;outline:none;background:#222;color:#fff;}
+.popup{position:fixed;top:20px;right:20px;background:var(--dark);padding:12px 18px;border-radius:10px;display:none;z-index:999;transition:0.3s;}
+footer{text-align:center;padding:40px;color:#ccc;}
+.sticky-bar{position:fixed;bottom:0;width:100%;background:linear-gradient(90deg,var(--rgb1),var(--rgb2),var(--rgb3));color:#000;text-align:center;padding:14px;font-weight:700;z-index:999;cursor:pointer;transition:0.3s;}
+.sticky-bar:hover{opacity:0.9;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(50px);}to{opacity:1;}}
-@keyframes moveBg{from{transform:translate(0,0);}to{transform:translate(-150px,-150px);}}
-
-.title{text-align:center;font-size:32px;margin:40px 0;color:#ffcc00;}
-
-.categories,.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:25px;padding:50px;}
-
-.cat{height:220px;border-radius:15px;display:flex;align-items:flex-end;padding:20px;font-size:20px;font-weight:700;background-size:cover;background-position:center;position:relative;overflow:hidden;transition:0.4s;}
-.cat::after{content:"";position:absolute;width:100%;height:100%;background:rgba(0,0,0,0.5);} 
-.cat span{position:relative;z-index:2;}
-.cat:hover{transform:scale(1.08);box-shadow:0 0 25px #ffcc00;}
-
-.card{background:#111;border-radius:15px;overflow:hidden;transition:0.4s;}
-.card:hover{transform:translateY(-12px) scale(1.02);box-shadow:0 0 30px rgba(255,204,0,0.4);}
-.card img{width:100%;height:200px;object-fit:cover;}
-.card h3{padding:10px;color:#ffcc00;}
-.card p{padding:0 10px;color:#bbb;font-size:14px;}
-.card button{margin:12px;padding:12px;width:calc(100% - 24px);border:none;background:#ffcc00;font-weight:700;cursor:pointer;border-radius:6px;transition:0.3s;}
-.card button:hover{box-shadow:0 0 20px #ffcc00;transform:scale(1.05);}
-
-.contact{text-align:center;padding:50px;line-height:28px;}
-
-.call-btn{position:fixed;bottom:20px;right:20px;background:#ffcc00;color:black;padding:16px;border-radius:50%;font-size:20px;box-shadow:0 0 20px #ffcc00;animation:pulse 1.5s infinite;}
-@keyframes pulse{0%{transform:scale(1);}50%{transform:scale(1.2);}100%{transform:scale(1);}}
-
-#orderForm{display:none;position:fixed;width:100%;height:100%;background:rgba(0,0,0,0.9);justify-content:center;align-items:center;}
-.form-box{background:#111;padding:25px;width:320px;border-radius:12px;box-shadow:0 0 25px rgba(255,204,0,0.3);animation:fadeUp 0.4s;}
-.form-box input,.form-box textarea{width:100%;margin:8px 0;padding:10px;background:#000;border:1px solid #333;color:#fff;border-radius:5px;}
-.form-box button{margin-top:10px;padding:12px;width:100%;border:none;background:#ffcc00;color:black;font-weight:700;border-radius:6px;}
-
-footer{background:#000;text-align:center;padding:20px;color:#aaa;}
 </style>
 </head>
-
 <body>
+
+<div class="cursor"></div>
 <header>
-<div class="logo">MyBrand</div>
-<nav>
-<a href="#home">Home</a>
-<a href="#products">Products</a>
-<a href="#contact">Contact</a>
-</nav>
+  <div class="logo">MyBrand</div>
+  <nav>
+    <a href="#hero">Home</a>
+    <a href="#productsGrid">Products</a>
+    <a href="#reviewsSection">Reviews</a>
+    <a href="#contactSection">Contact</a>
+  </nav>
+  <div class="theme-toggle" onclick="toggleTheme()">🌓 Theme</div>
 </header>
 
-<section class="hero" id="home">
-<div class="hero-text">
-<h1>Premium Raw Materials</h1>
-<p>Fast Delivery • Trusted Quality</p>
-<button onclick="scrollToProducts()">Explore</button>
-</div>
+<div class="service-strip">🛎 24x7 Service Available</div>
+
+<section class="hero" id="hero">
+  <div id="tsparticles"></div>
+  <h1>Premium&Cheap Raw Materials </h1>
 </section>
 
-<h2 class="title">Categories</h2>
-<section class="categories">
-<div class="cat" style="background:url('https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800')"><span>Fabrics</span></div>
-<div class="cat" style="background:url('https://images.unsplash.com/photo-1581093588401-22d0b3baf5c0?q=80&w=800')"><span>Chemicals</span></div>
-<div class="cat" style="background:url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800')"><span>Electronics</span></div>
-<div class="cat" style="background:url('https://images.unsplash.com/photo-1606788075761-2c7c8a0cbd3c?q=80&w=800')"><span>Spices</span></div>
+<div class="trust-strip">✔ 300+ Happy Customers &nbsp;&nbsp; ✔ Fast Delivery &nbsp;&nbsp; ✔ Bulk Orders Available</div>
+
+<section class="grid" id="productsGrid"></section>
+
+<section class="reviews" id="reviewsSection">
+<h2 style="color:var(--gold)">⭐ 300+ Happy Customers</h2>
+<p style="color:#aaa">Trusted across India</p>
+<div id="reviewCards"></div>
+<button class="load-more" onclick="loadMoreReviews()">Load More</button>
 </section>
 
-<h2 class="title" id="products">Products</h2>
-<section class="grid">
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?q=80&w=800">
-<h3>Fabric Rolls</h3>
-<p>High quality textile material</p>
-<button onclick="openForm('Fabric Rolls')">Order</button>
-</div>
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1581092919534-7c8c2b3d4e89?q=80&w=800">
-<h3>Industrial Chemicals</h3>
-<p>Bulk chemical supply</p>
-<button onclick="openForm('Chemicals')">Order</button>
-</div>
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=800">
-<h3>Electronic Parts</h3>
-<p>Raw electronic components</p>
-<button onclick="openForm('Electronics')">Order</button>
-</div>
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?q=80&w=800">
-<h3>Natural Spices</h3>
-<p>Fresh organic spices</p>
-<button onclick="openForm('Spices')">Order</button>
-</div>
-
+<section id="contactSection" style="padding:80px 40px;text-align:center;background:#111;">
+<h2 style="color:var(--gold)">Contact Us</h2>
+<p>Email: anshisgood97@gmail.com | Phone: 9026475553</p>
 </section>
 
-<section class="contact" id="contact">
-<h2>Contact</h2>
-<p>Ansh Dubey</p>
-<p>9026475553</p>
-<p>mybrand4@gmail.com</p>
-</section>
+<div class="float-box chat-box" onclick="toggleChat()">💬 Chat</div>
+<div class="float-box call-box" onclick="callNow()">📞 Call</div>
+<div class="float-box" style="bottom:160px;" onclick="orderNow('Hello')">📲 WhatsApp</div>
+<div class="float-box" style="bottom:230px;" onclick="toggleMusic()">🎵 Music</div>
 
-<a href="tel:9026475553" class="call-btn">📞</a>
-
-<div id="orderForm">
-<div class="form-box">
-<h3>Order</h3>
-<input id="name" placeholder="Name">
-<input id="phone" placeholder="Phone">
-<textarea id="address" placeholder="Address"></textarea>
-<button onclick="sendOrder()">Send</button>
-<button onclick="closeForm()">Cancel</button>
-</div>
+<div id="chatbot">
+  <div class="header">Assistant</div>
+  <div id="chatMessages"><div>Hello! 👋 How can I help you today?</div></div>
+  <input id="chatInput" placeholder="Type here..." onkeypress="if(event.key==='Enter'){sendMessage();}">
 </div>
 
-<footer>© 2026 MyBrand</footer>
+<audio id="bgMusic"><source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+<div class="popup" id="popup"></div>
+<div class="sticky-bar" onclick="orderNow('General Inquiry')">💬 Order on WhatsApp</div>
+<footer><p>Email: anshisgood97@gmail.com</p><p>Phone: 9026475553</p></footer>
 
 <script>
-let selectedItem="";
-function scrollToProducts(){document.getElementById("products").scrollIntoView({behavior:"smooth"});}
-function openForm(item){selectedItem=item;document.getElementById("orderForm").style.display="flex";}
-function closeForm(){document.getElementById("orderForm").style.display="none";}
-function sendOrder(){let name=document.getElementById("name").value;let phone=document.getElementById("phone").value;let address=document.getElementById("address").value;if(!name||!phone||!address){alert("Fill all details!");return;}window.open(`https://wa.me/919026475553?text=Order:${selectedItem}%0AName:${name}%0APhone:${phone}%0AAddress:${address}`);alert("Order Sent
+// Cursor
+document.addEventListener("mousemove",e=>{document.querySelector(".cursor").style.left=e.clientX+"px";document.querySelector(".cursor").style.top=e.clientY+"px";});
+
+// Theme toggle
+function toggleTheme(){if(document.body.style.background=="#fff"){document.body.style.background="#0a0a0a";document.body.style.color="#fff";}else{document.body.style.background="#fff";document.body.style.color="#000";}}
+
+// Call & WhatsApp
+function callNow(){window.location.href="tel:9026475553";}
+function orderNow(product){let msg=`Hello, I want to order\nProduct: ${product}\nQuantity:\nLocation:\nBudget:`;window.open("https://wa.me/919026475553?text="+encodeURIComponent(msg));}
+
+// Music
+let music=document.getElementById("bgMusic"); let playing=false;
+function toggleMusic(){if(playing){music.pause();}else{music.play();}playing=!playing;}
+
+// Products
+let productsData=[
+  {name:"Fabric Rolls",tag:"Best Seller",tag2:"High Demand",img:"https://images.pexels.com/photos/3812444/pexels-photo-3812444.jpeg?auto=compress&cs=tinysrgb&w=600",countdown:10},
+  {name:"Industrial Chemicals",tag:"Hot",tag2:"",img:"https://images.pexels.com/photos/4031813/pexels-photo-4031813.jpeg?auto=compress&cs=tinysrgb&w=600",countdown:0},
+  {name:"Gadgets & Electronics",tag:"",tag2:"",img:"https://images.pexels.com/photos/1092671/pexels-photo-1092671.jpeg?auto=compress&cs=tinysrgb&w=600",countdown:0},
+  {name:"Spices & Ingredients",tag:"New",tag2:"",img:"https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=600",countdown:5}
+];
+let grid=document.getElementById("productsGrid");
+productsData.forEach(p=>{
+  let div=document.createElement("div"); div.className="card";
+  div.innerHTML=`${p.tag?`<div class="tag">${p.tag}</div>`:''}${p.tag2?`<div class="tag2">${p.tag2}</div>`:''}<img src="${p.img}"><h3>${p.name}</h3><p>Premium quality ${p.name}</p>${p.countdown>0?`<div class="countdown" data-time="${p.countdown}">Offer: ${p.countdown}d left</div>`:''}<button onclick="orderNow('${p.name}')">Order on WhatsApp</button>`;
+  grid.appendChild(div);
+});
+
+// Countdown daily
+setInterval(()=>{document.querySelectorAll(".countdown").forEach(c=>{let t=parseInt(c.getAttribute("data-time"));if(t>0){t--;c.setAttribute("data-time",t);c.innerText=`Offer: ${t}d left`;}});},1000*60*60*24);
+
+// Reviews
+let reviewsData=[
+  {name:"Ravi",city:"Delhi",msg:"Quality mast hai 🔥 delivery fast thi",img:"https://i.pravatar.cc/40?img=10"},
+  {name:"Aman",city:"Mumbai",msg:"Bulk me liya, rate sahi mila 💸",img:"https://i.pravatar.cc/41?img=20"},
+  {name:"Priya",city:"Lucknow",msg:"Very good quality 👍",img:"https://i.pravatar.cc/42?img=30"},
+  {name:"Siddharth",city:"Jaipur",msg:"Top quality 👌",img:"https://i.pravatar.cc/43?img=40"},
+  {name:"Neha",city:"Surat",msg:"Highly recommend 🔥",img:"https://i.pravatar.cc/44?img=50"}
+];
+let reviewIndex=0;
+function loadMoreReviews(){
+  let reviewCards=document.getElementById("reviewCards");
+  for(let i=0;i<2;i++){
+    if(reviewIndex>=reviewsData.length) break;
+    let r=reviewsData[reviewIndex++];
+    let div=document.createElement("div"); div.className="review-card";
+    div.innerHTML=`<div style="display:flex;gap:10px;align-items:center;"><img src="${r.img}" style="border-radius:50%;"><strong>${r.name}, ${r.city}</strong></div><div class="stars">⭐⭐⭐⭐⭐</div><p>"${r.msg}"</p><small>✔ Verified Buyer</small>`;
+    reviewCards.appendChild(div);
+  }
+}
+loadMoreReviews();
+
+// Live popup
+let names=["Aman","Ravi","Priya","Siddharth","Neha"];
+let cities=["Delhi","Mumbai","Lucknow","Jaipur","Surat"];
+setInterval(()=>{
+  let n=names[Math.floor(Math.random()*names.length)];
+  let c=cities[Math.floor(Math.random()*cities.length)];
+  let p=productsData[Math.floor(Math.random()*productsData.length)].name;
+  let popup=document.getElementById("popup");
+  popup.innerText=`${n} from ${c} just ordered ${p} 🔥`;
+  popup.style.display="block";
+  setTimeout(()=>popup.style.display="none",3000);
+},6000);
+
+// Chatbot
+function toggleChat(){const bot=document.getElementById('chatbot');bot.style.display = bot.style.display==='flex'?'none':'flex';}
+function sendMessage(){const input=document.getElementById('chatInput'); const msg=input.value.trim(); if(!msg) return; const chat=document.getElementById('chatMessages'); const userDiv=document.createElement('div'); userDiv.style.textAlign='right'; userDiv.style.margin='5px 0'; userDiv.innerHTML=`<strong>You:</strong> ${msg}`; chat.appendChild(userDiv); chat.scrollTop = chat.scrollHeight; input.value=''; const botDiv=document.createElement('div'); botDiv.style.textAlign='left'; botDiv.style.margin='5px 0'; let response="I can help you place an order!"; botDiv.innerHTML=`<strong>Assistant:</strong> ${response} <br><button onclick="orderNow('General Inquiry')" style="margin-top:5px;padding:5px 8px;background:var(--gold);border:none;border-radius:5px;cursor:pointer;">Order on WhatsApp</button>`; chat.appendChild(botDiv); chat.scrollTop = chat.scrollHeight;}
+
+// Scroll animation
+window.addEventListener("scroll",()=>{document.querySelectorAll(".card").forEach(c=>{if(c.getBoundingClientRect().top < window.innerHeight -100){c.classList.add("show");}});});
+
+// tsParticles - Hero fluid background
+tsParticles.load("tsparticles",{
+  fullScreen: { enable:false },
+  particles:{
+    number:{value:80,density:{enable:true,value_area:800}},
+    color:{value:["#ffd966","#ff4d4d","#4dff4d","#4d4dff"]},
+    shape:{type:"circle"},
+    opacity:{value:0.5,random:true},
+    size:{value:5,random:true},
+    move:{enable:true,speed:1,direction:"none",out_mode:"bounce"}
+  },
+  interactivity:{events:{onhover:{enable:true,mode:"repulse"}}},
+  retina_detect:true
+});
+</script>
+</body>
+</html>
