@@ -3,420 +3,1176 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MyBrand Premium - Trusted Quality Materials</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<script src="https://cdn.jsdelivr.net/npm/tsparticles@3.6.0/tsparticles.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/lib/typed.min.js"></script>
+<title>MyBrand — Premium Raw Materials</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{
-  --gold:#ffd700;
-  --gold-dark:#e6c200;
-  --dark:#0a0a0a;
-  --dark2:#1a1a1a;
-  --light:#f8f9fa;
-  --accent:#00d4ff;
-  --gradient:linear-gradient(135deg,#ffd700 0%,#ff8c00 50%,#ff4d4d 100%);
-  --gradient2:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
-  --shadow-gold:0 20px 40px rgba(255,215,0,0.3);
-  --shadow-neon:0 0 30px rgba(0,212,255,0.5);
+:root {
+  --gold: #C9A84C;
+  --gold-light: #E8C96B;
+  --gold-pale: #F5E6C0;
+  --ink: #0D0D0D;
+  --ink-soft: #1A1A1A;
+  --surface: #141414;
+  --surface2: #1E1E1E;
+  --border: rgba(201,168,76,0.15);
+  --text-muted: #888;
+  --text-mid: #BFBFBF;
+  --white: #F7F4EE;
+  --accent: #C9A84C;
+  --red: #D94F3D;
 }
 
-/* Reset & Base */
-* {margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-body{
-  background:linear-gradient(135deg,#0a0a0a 0%,#1a1a1a 100%);
-  color:#fff;
-  overflow-x:hidden;
-  font-size:clamp(15px,1.6vw,18px);
-  min-height:100vh;
-  position:relative;
+*,*::before,*::after { margin:0;padding:0;box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--ink);
+  color: var(--white);
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  overflow-x: hidden;
+  cursor: none;
 }
 
-/* Custom Cursor */
-.cursor,.cursor2{
-  position:fixed;
-  border-radius:50%;
-  pointer-events:none;
-  z-index:99999;
-  transition:0s linear;
+/* ── CURSOR ── */
+.cur-dot {
+  width: 6px; height: 6px;
+  background: var(--gold);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%,-50%);
+  transition: transform 0.08s;
 }
-.cursor{width:20px;height:20px;background:var(--gold);box-shadow:var(--shadow-gold);}
-.cursor2{width:60px;height:60px;background:var(--accent);opacity:0.3;filter:blur(10px);}
+.cur-ring {
+  width: 32px; height: 32px;
+  border: 1px solid rgba(201,168,76,0.6);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%,-50%);
+  transition: width 0.3s, height 0.3s, border-color 0.3s;
+}
+body:has(a:hover) .cur-ring,
+body:has(button:hover) .cur-ring {
+  width: 48px; height: 48px;
+  border-color: var(--gold);
+}
 
-/* Loading Screen */
-#loader{
-  position:fixed;
-  top:0;left:0;width:100%;height:100%;
-  background:linear-gradient(45deg,#0a0a0a,#1a1a1a);
-  display:flex;align-items:center;justify-content:center;
-  z-index:10000;
-  transition:1s;
-}
-.loader-spinner{
-  width:60px;height:60px;
-  border:4px solid rgba(255,215,0,0.1);
-  border-top:4px solid var(--gold);
-  border-radius:50%;
-  animation:spin 1s linear infinite;
+/* ── TOPBAR ── */
+.topbar {
+  background: var(--gold);
+  color: var(--ink);
+  text-align: center;
+  padding: 8px 20px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
-/* Header */
-header{
-  position:fixed;top:0;width:100%;
-  backdrop-filter:blur(20px);
-  background:rgba(10,10,10,0.95);
-  border-bottom:1px solid rgba(255,215,0,0.2);
-  z-index:1000;
-  padding:1rem 5%;
-  display:flex;justify-content:space-between;align-items:center;
+/* ── HEADER ── */
+header {
+  position: fixed;
+  top: 36px;
+  left: 0; right: 0;
+  z-index: 900;
+  padding: 0 5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 68px;
+  border-bottom: 1px solid transparent;
+  transition: background 0.4s, border-color 0.4s;
 }
-.logo{
-  font-family:'Orbitron',monospace;
-  font-size:clamp(1.8rem,4.5vw,2.5rem);
-  font-weight:900;
-  background:var(--gradient);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  background-clip:text;
+header.scrolled {
+  background: rgba(13,13,13,0.92);
+  backdrop-filter: blur(16px);
+  border-color: var(--border);
+  top: 0;
 }
-nav{display:flex;gap:2rem;align-items:center;}
-nav a{
-  color:#fff;text-decoration:none;font-weight:500;
-  position:relative;padding:0.5rem 0;
-  transition:0.3s;
+.logo {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--gold);
+  letter-spacing: -0.02em;
 }
-nav a::after{
-  content:'';position:absolute;bottom:0;left:0;
-  width:0;height:2px;background:var(--gold);
-  transition:0.3s;
+.logo span { color: var(--white); }
+nav { display: flex; gap: 36px; align-items: center; }
+nav a {
+  color: var(--text-mid);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: color 0.2s;
 }
-nav a:hover::after{width:100%;}
-nav a:hover{color:var(--gold);}
+nav a:hover { color: var(--gold); }
+.nav-cta {
+  background: var(--gold);
+  color: var(--ink) !important;
+  padding: 9px 20px;
+  border-radius: 4px;
+  font-weight: 600 !important;
+}
+.nav-cta:hover { background: var(--gold-light) !important; color: var(--ink) !important; }
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+.hamburger span { width: 22px; height: 1.5px; background: var(--white); display: block; }
 
-/* Notification Strips */
-.notify-strip{
-  position:fixed;top:80px;width:100%;z-index:999;
-  padding:1rem;text-align:center;font-weight:600;
-  animation:slideDown 0.5s ease;
-  cursor:pointer;
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 120px 5% 80px;
+  text-align: center;
 }
-.new-order{background:linear-gradient(90deg,#00ff88,#00cc66);color:#000;}
-.hot-deal{background:linear-gradient(90deg,#ff4757,#ff3838);color:#fff;}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 20%, rgba(201,168,76,0.07) 0%, transparent 70%),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.015) 0px, transparent 1px, transparent 80px),
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.015) 0px, transparent 1px, transparent 80px);
+}
+.hero-tag {
+  display: inline-block;
+  border: 1px solid var(--border);
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 6px 16px;
+  border-radius: 20px;
+  margin-bottom: 28px;
+  animation: fadeUp 0.8s ease both;
+}
+.hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2.8rem, 7vw, 6rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  max-width: 800px;
+  margin: 0 auto 28px;
+  animation: fadeUp 0.8s 0.1s ease both;
+}
+.hero h1 em {
+  font-style: normal;
+  color: var(--gold);
+}
+.hero-sub {
+  color: var(--text-muted);
+  font-size: 17px;
+  max-width: 500px;
+  margin: 0 auto 44px;
+  font-weight: 300;
+  animation: fadeUp 0.8s 0.2s ease both;
+}
+.hero-actions {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: fadeUp 0.8s 0.3s ease both;
+}
+.btn-primary {
+  background: var(--gold);
+  color: var(--ink);
+  border: none;
+  padding: 14px 32px;
+  border-radius: 4px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: background 0.2s, transform 0.15s;
+}
+.btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+.btn-outline {
+  background: transparent;
+  color: var(--white);
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 14px 32px;
+  border-radius: 4px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: border-color 0.2s, color 0.2s;
+}
+.btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+.hero-stats {
+  display: flex;
+  gap: 48px;
+  justify-content: center;
+  margin-top: 72px;
+  flex-wrap: wrap;
+  animation: fadeUp 0.8s 0.4s ease both;
+}
+.stat-item { text-align: center; }
+.stat-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--gold);
+}
+.stat-label { font-size: 12px; color: var(--text-muted); letter-spacing: 0.06em; text-transform: uppercase; }
+.hero-divider {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
 
-/* Hero Section */
-.hero{
-  min-height:100dvh;
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  text-align:center;padding:0 5% 2rem;
-  position:relative;overflow:hidden;
+/* ── MARQUEE ── */
+.marquee-wrap {
+  background: var(--gold);
+  padding: 13px 0;
+  overflow: hidden;
+  display: flex;
 }
-.hero::before{
-  content:'';position:absolute;top:0;left:0;
-  width:100%;height:100%;
-  background:radial-gradient(circle at 20% 80%,rgba(255,215,0,0.1) 0%,transparent 50%),
-              radial-gradient(circle at 80% 20%,rgba(0,212,255,0.1) 0%,transparent 50%);
+.marquee-track {
+  display: flex;
+  gap: 48px;
+  white-space: nowrap;
+  animation: marquee 20s linear infinite;
 }
-.hero-content{max-width:900px;}
-.hero h1{
-  font-family:'Orbitron',monospace;
-  font-size:clamp(3rem,8vw,6rem);
-  font-weight:900;
-  line-height:1.1;
-  background:var(--gradient);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  background-clip:text;
-  margin-bottom:1rem;
-  animation:glow 2s ease-in-out infinite alternate;
+.marquee-track span {
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  flex-shrink: 0;
 }
-.hero p{
-  font-size:clamp(1.2rem,3vw,1.8rem);
-  color:#ccc;margin-bottom:2rem;
-  opacity:0;animation:fadeUp 1s ease 0.5s forwards;
-}
-.cta-hero{
-  padding:1.2rem 3rem;
-  font-size:clamp(1rem,2vw,1.3rem);
-  font-weight:700;
-  background:var(--gradient);
-  border:none;border-radius:50px;
-  color:#000;
-  cursor:pointer;
-  transition:0.4s cubic-bezier(0.22,1,0.36,1);
-  box-shadow:var(--shadow-gold);
-  position:relative;overflow:hidden;
-}
-.cta-hero:hover{transform:translateY(-5px) scale(1.05);box-shadow:0 25px 50px rgba(255,215,0,0.4);}
+.marquee-dot { color: rgba(13,13,13,0.4) !important; }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-/* Products Grid */
-.section-title{
-  text-align:center;font-family:'Orbitron',monospace;
-  font-size:clamp(2rem,5vw,3.5rem);
-  font-weight:900;
-  background:var(--gradient);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  margin:4rem 0 2rem;
+/* ── SECTION BASE ── */
+section { padding: 96px 5%; }
+.section-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
 }
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-  gap:2.5rem;padding:2rem 5%;
-  max-width:1400px;margin:0 auto;
+.section-heading {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  max-width: 600px;
 }
-.card{
-  background:linear-gradient(145deg,#1a1a1a,#111);
-  border-radius:24px;overflow:hidden;
-  position:relative;
-  transition:0.6s cubic-bezier(0.22,1,0.36,1);
-  opacity:0;transform:translateY(60px);
-  border:1px solid rgba(255,215,0,0.1);
-}
-.card.show{opacity:1;transform:translateY(0);}
-.card:hover{
-  transform:translateY(-20px) scale(1.03);
-  box-shadow:var(--shadow-gold),var(--shadow-neon);
-  border-color:var(--gold);
-}
-.card-img{
-  position:relative;overflow:hidden;
-  height:220px;
-}
-.card-img img{
-  width:100%;height:100%;object-fit:cover;
-  transition:0.6s cubic-bezier(0.22,1,0.36,1);
-}
-.card:hover .card-img img{transform:scale(1.1);}
-.card-tags{position:absolute;top:1rem;left:1rem;z-index:2;}
-.tag{
-  display:inline-block;background:rgba(0,0,0,0.8);
-  color:var(--gold);padding:0.4rem 0.8rem;
-  border-radius:20px;font-size:0.75rem;
-  font-weight:600;margin-right:0.5rem;
-  box-shadow:0 4px 15px rgba(0,0,0,0.3);
-}
-.card-content{padding:1.5rem;}
-.card h3{
-  font-size:clamp(1.2rem,2.5vw,1.6rem);
-  font-weight:700;color:var(--gold);
-  margin-bottom:0.5rem;
-}
-.card p{color:#ccc;line-height:1.6;margin-bottom:1rem;}
-.card-price{
-  font-size:1.3rem;font-weight:800;
-  background:var(--gradient);color:#000;
-  padding:0.5rem 1rem;border-radius:25px;
-  display:inline-block;margin-bottom:1rem;
-}
-.card-cta{
-  width:100%;padding:1rem;
-  background:var(--gradient);
-  border:none;border-radius:16px;
-  font-weight:700;color:#000;
-  cursor:pointer;transition:0.3s;
-  font-size:1rem;
-}
-.card-cta:hover{transform:scale(1.02);box-shadow:var(--shadow-gold);}
 
-/* Stats Section */
-.stats{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:2rem;padding:4rem 5%;background:rgba(255,255,255,0.02);
-  backdrop-filter:blur(10px);
+/* ── PRODUCTS ── */
+.products-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 56px;
+  gap: 24px;
+  flex-wrap: wrap;
 }
-.stat-item{text-align:center;}
-.stat-number{
-  font-family:'Orbitron',monospace;
-  font-size:clamp(2rem,6vw,4rem);
-  font-weight:900;color:var(--gold);
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1px;
+  border: 1px solid var(--border);
+  background: var(--border);
+  overflow: hidden;
+  border-radius: 8px;
 }
-.stat-label{color:#ccc;font-weight:500;}
+.product-card {
+  background: var(--ink);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease, background 0.3s;
+  cursor: pointer;
+}
+.product-card.visible { opacity: 1; transform: translateY(0); }
+.product-card:hover { background: var(--surface2); }
+.product-card:hover .card-img img { transform: scale(1.06); }
+.card-img {
+  height: 240px;
+  overflow: hidden;
+  position: relative;
+}
+.card-img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.25,1,0.5,1);
+  filter: brightness(0.85);
+}
+.card-badge {
+  position: absolute;
+  top: 14px; left: 14px;
+  background: var(--gold);
+  color: var(--ink);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 3px;
+}
+.card-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+.card-category {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+.card-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 19px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--white);
+}
+.card-desc { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; flex: 1; line-height: 1.6; }
+.card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
+.card-tag { font-size: 11px; color: var(--gold); }
+.card-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--white);
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+.card-btn:hover { background: var(--gold); border-color: var(--gold); color: var(--ink); }
 
-/* Reviews */
-.reviews{padding:4rem 5%;background:rgba(0,0,0,0.3);}
-.review-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem;}
-.review-card{
-  background:linear-gradient(145deg,#1a1a1a,#111);
-  padding:2rem;border-radius:20px;
-  border:1px solid rgba(255,215,0,0.1);
-  transition:0.4s;
+/* ── ABOUT BAND ── */
+.about-band {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  overflow: hidden;
 }
-.review-card:hover{transform:translateY(-10px);box-shadow:var(--shadow-gold);}
-.reviewer-info{display:flex;align-items:center;gap:1rem;margin-bottom:1rem;}
-.reviewer-avatar{
-  width:50px;height:50px;border-radius:50%;
-  background:linear-gradient(135deg,var(--gold),var(--accent));
-  display:flex;align-items:center;justify-content:center;
-  font-weight:700;
+.about-text { padding: 80px 6%; }
+.about-img {
+  position: relative;
+  min-height: 400px;
+  overflow: hidden;
 }
-.stars{display:flex;gap:0.2rem;color:var(--gold);margin-bottom:1rem;}
-.review-text{font-style:italic;color:#ddd;line-height:1.7;}
+.about-img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: brightness(0.6) sepia(0.3);
+}
+.about-img::after {
+  content:'';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--surface) 0%, transparent 30%);
+}
+.about-text p { color: var(--text-muted); margin-top: 20px; font-size: 15px; max-width: 440px; }
+.about-features { margin-top: 40px; display: flex; flex-direction: column; gap: 16px; }
+.feature-row {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+.feature-icon {
+  width: 36px; height: 36px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.feature-text strong { display: block; font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+.feature-text span { font-size: 12px; color: var(--text-muted); }
 
-/* Floating Elements */
-.floating-elements{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;}
-.floating-el{
-  position:absolute;font-size:2rem;
-  animation:float 6s ease-in-out infinite;
+/* ── PROCESS ── */
+.process-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 56px;
 }
-@keyframes float{0%,100%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-20px) rotate(5deg);}}
+.process-step {
+  padding: 36px 28px;
+  border-right: 1px solid var(--border);
+  position: relative;
+}
+.process-step:last-child { border-right: none; }
+.step-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 56px;
+  font-weight: 800;
+  color: rgba(201,168,76,0.1);
+  line-height: 1;
+  margin-bottom: 12px;
+}
+.step-title { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+.step-desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
 
-.cta-float{
-  position:fixed;right:5%;background:rgba(10,10,10,0.95);
-  backdrop-filter:blur(20px);border-radius:50px;
-  padding:1rem 1.5rem;margin-bottom:1rem;
-  cursor:pointer;transition:0.3s;
-  border:1px solid rgba(255,215,0,0.3);
-  box-shadow:var(--shadow-gold);
+/* ── REVIEWS ── */
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 56px;
 }
-.cta-float:hover{transform:translateY(-5px) scale(1.05);}
+.review-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 28px;
+  transition: border-color 0.3s, transform 0.3s;
+  opacity: 0;
+  transform: translateY(16px);
+}
+.review-card.visible { opacity: 1; transform: translateY(0); }
+.review-card:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-3px); }
+.review-stars { color: var(--gold); font-size: 13px; letter-spacing: 2px; margin-bottom: 16px; }
+.review-text { font-size: 14px; color: var(--text-mid); line-height: 1.7; margin-bottom: 20px; font-style: italic; }
+.reviewer-row { display: flex; align-items: center; gap: 12px; }
+.reviewer-avatar {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 700; color: var(--gold);
+}
+.reviewer-name { font-size: 13px; font-weight: 600; }
+.reviewer-city { font-size: 11px; color: var(--text-muted); }
+.verified { font-size: 10px; color: #4CAF50; font-weight: 600; letter-spacing: 0.05em; }
 
-/* Chatbot Enhanced */
-#chatbot{
-  position:fixed;right:5%;bottom:20%;
-  width:90%;max-width:400px;
-  background:linear-gradient(145deg,#1a1a1a,#111);
-  border-radius:24px;overflow:hidden;
-  display:none;flex-direction:column;
-  z-index:999;box-shadow:var(--shadow-gold);
-  border:1px solid rgba(255,215,0,0.2);
+/* ── CONTACT ── */
+.contact-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
 }
-.chat-header{
-  background:var(--gradient);color:#000;
-  padding:1.5rem;font-weight:700;
-  display:flex;justify-content:space-between;align-items:center;
+.contact-links { display: flex; flex-direction: column; gap: 12px; margin-top: 36px; }
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 22px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  text-decoration: none;
+  color: var(--white);
+  font-size: 14px;
+  transition: border-color 0.2s, background 0.2s;
 }
-.chat-messages{
-  flex:1;max-height:400px;overflow-y:auto;
-  padding:1.5rem;background:rgba(255,255,255,0.02);
+.contact-link:hover { border-color: var(--gold); background: rgba(201,168,76,0.05); }
+.contact-link-icon { font-size: 20px; }
+.contact-link-text strong { display: block; font-size: 13px; font-weight: 600; margin-bottom: 1px; }
+.contact-link-text span { font-size: 12px; color: var(--text-muted); }
+.contact-form { display: flex; flex-direction: column; gap: 14px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+.form-input {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 12px 16px;
+  color: var(--white);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
 }
-.chat-input-container{
-  padding:1.5rem;background:#111;
-  display:flex;gap:1rem;
-}
-#chatInput{
-  flex:1;padding:1rem;border-radius:25px;
-  border:1px solid rgba(255,215,0,0.3);
-  background:rgba(255,255,255,0.05);
-  color:#fff;outline:none;font-size:1rem;
-}
-.chat-btn{background:var(--gold);color:#000;border:none;
-  padding:1rem;border-radius:50%;cursor:pointer;}
+.form-input:focus { border-color: var(--gold); }
+.form-input::placeholder { color: var(--text-muted); }
+textarea.form-input { resize: vertical; min-height: 110px; }
 
-/* Animations */
-@keyframes spin{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
-@keyframes glow{0%{text-shadow:0 0 20px var(--gold);}100%{text-shadow:0 0 40px var(--gold),0 0 60px var(--gold);}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(50px);}to{opacity:1;transform:translateY(0);}}
-@keyframes slideDown{from{transform:translateY(-100%);}to{transform:translateY(0);}}
-@keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.05);}}
+/* ── FLOATING ACTIONS ── */
+.float-actions {
+  position: fixed;
+  right: 24px;
+  bottom: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 800;
+}
+.fab {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  position: relative;
+}
+.fab:hover { background: var(--gold); border-color: var(--gold); transform: scale(1.08); }
+.fab-tooltip {
+  position: absolute;
+  right: 58px;
+  white-space: nowrap;
+  background: var(--surface2);
+  color: var(--white);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+.fab:hover .fab-tooltip { opacity: 1; }
 
-.stars{animation:pulse 2s infinite;}
+/* ── CHATBOT ── */
+.chatbot-wrap {
+  position: fixed;
+  right: 24px;
+  bottom: 80px;
+  width: 320px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  display: none;
+  flex-direction: column;
+  z-index: 900;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+}
+.chatbot-header {
+  background: var(--gold);
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: default;
+}
+.chatbot-header-left { display: flex; align-items: center; gap: 10px; }
+.chatbot-dot { width: 8px; height: 8px; border-radius: 50%; background: #2d8a2d; }
+.chatbot-title { font-size: 14px; font-weight: 700; color: var(--ink); }
+.chatbot-close { background: none; border: none; color: var(--ink); font-size: 18px; cursor: pointer; line-height: 1; }
+.chat-messages { padding: 16px; max-height: 260px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+.msg-bot, .msg-user { font-size: 13px; line-height: 1.6; max-width: 85%; }
+.msg-bot {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  padding: 10px 14px;
+  border-radius: 0 10px 10px 10px;
+  color: var(--text-mid);
+  align-self: flex-start;
+}
+.msg-user {
+  background: var(--gold);
+  color: var(--ink);
+  padding: 10px 14px;
+  border-radius: 10px 0 10px 10px;
+  font-weight: 500;
+  align-self: flex-end;
+}
+.chat-input-wrap {
+  display: flex;
+  border-top: 1px solid var(--border);
+}
+.chat-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 12px 16px;
+  color: var(--white);
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+}
+.chat-input::placeholder { color: var(--text-muted); }
+.chat-send {
+  background: var(--gold);
+  border: none;
+  padding: 0 16px;
+  color: var(--ink);
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.chat-send:hover { background: var(--gold-light); }
 
-/* Responsive */
-@media(max-width:768px){
-  .grid{grid-template-columns:1fr;gap:2rem;}
-  .cta-float{right:2%;padding:0.8rem 1.2rem;}
-  #chatbot{right:2%;bottom:10%;width:95%;}
+/* ── LIVE POPUP ── */
+.live-popup {
+  position: fixed;
+  bottom: 24px; left: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 18px;
+  font-size: 13px;
+  color: var(--text-mid);
+  display: none;
+  align-items: center;
+  gap: 10px;
+  z-index: 700;
+  max-width: 280px;
+  box-shadow: 0 12px 36px rgba(0,0,0,0.4);
+}
+.popup-icon { font-size: 20px; }
+
+/* ── STICKY BAR ── */
+.sticky-bar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: var(--gold);
+  color: var(--ink);
+  text-align: center;
+  padding: 14px 20px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  z-index: 850;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.sticky-bar:hover { background: var(--gold-light); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: 60px 5% 80px;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 48px;
+}
+.footer-logo {
+  font-family: 'Syne', sans-serif;
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--gold);
+  margin-bottom: 14px;
+}
+.footer-desc { font-size: 13px; color: var(--text-muted); max-width: 280px; line-height: 1.8; }
+.footer-heading { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--white); margin-bottom: 18px; }
+.footer-links { display: flex; flex-direction: column; gap: 10px; }
+.footer-links a { color: var(--text-muted); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+.footer-links a:hover { color: var(--gold); }
+.footer-bottom {
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: var(--text-muted);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* ── MOBILE MENU ── */
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  position: fixed;
+  inset: 0;
+  background: var(--ink);
+  z-index: 950;
+  padding: 40px 5%;
+  gap: 32px;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  font-family: 'Syne', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--white);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.mobile-menu a:hover { color: var(--gold); }
+.mobile-close {
+  align-self: flex-end;
+  background: none;
+  border: none;
+  color: var(--white);
+  font-size: 28px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  nav { display: none; }
+  .hamburger { display: flex; }
+  .about-band { grid-template-columns: 1fr; }
+  .about-img { min-height: 280px; }
+  .contact-wrap { grid-template-columns: 1fr; gap: 48px; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .process-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 540px) {
+  .hero h1 { font-size: 2.4rem; }
+  .hero-stats { gap: 24px; }
+  .process-grid { grid-template-columns: 1fr; }
+  .products-grid { grid-template-columns: 1fr; }
+  .float-actions { right: 14px; }
+  .live-popup { left: 14px; bottom: 70px; }
 }
 </style>
 </head>
 <body>
-<!-- Loading Screen -->
-<div id="loader">
-  <div class="loader-spinner"></div>
-</div>
 
-<!-- Floating Elements -->
-<div class="floating-elements" id="floatingElements"></div>
+<!-- Custom cursor -->
+<div class="cur-dot" id="curDot"></div>
+<div class="cur-ring" id="curRing"></div>
 
-<!-- Custom Cursor -->
-<div class="cursor" id="cursor"></div>
-<div class="cursor2" id="cursor2"></div>
+<!-- Top announcement bar -->
+<div class="topbar" id="topbar">🚚 Free delivery on bulk orders above ₹10,000 — Call 9026475553</div>
 
 <!-- Header -->
-<header>
-  <div class="logo">My<span style="color:var(--accent)">Brand</span></div>
+<header id="header">
+  <div class="logo">My<span>Brand</span></div>
   <nav>
-    <a href="#hero"><i class="fas fa-home"></i> Home</a>
-    <a href="#products"><i class="fas fa-box"></i> Products</a>
-    <a href="#reviews"><i class="fas fa-star"></i> Reviews</a>
-    <a href="#contact"><i class="fas fa-phone"></i> Contact</a>
+    <a href="#hero">Home</a>
+    <a href="#products">Products</a>
+    <a href="#about">About</a>
+    <a href="#reviews">Reviews</a>
+    <a href="#contact">Contact</a>
+    <a href="#" class="nav-cta" onclick="orderNow('General Inquiry');return false;">Order Now</a>
   </nav>
+  <div class="hamburger" onclick="openMenu()" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </div>
 </header>
 
-<!-- Notification Strips -->
-<div class="notify-strip new-order" id="notifyStrip" style="display:none;"></div>
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="closeMenu()">✕</button>
+  <a href="#hero" onclick="closeMenu()">Home</a>
+  <a href="#products" onclick="closeMenu()">Products</a>
+  <a href="#about" onclick="closeMenu()">About</a>
+  <a href="#reviews" onclick="closeMenu()">Reviews</a>
+  <a href="#contact" onclick="closeMenu()">Contact</a>
+  <a href="#" onclick="orderNow('General Inquiry');closeMenu();return false;" style="color:var(--gold)">→ Order on WhatsApp</a>
+</div>
 
-<!-- Hero Section -->
+<!-- Hero -->
 <section class="hero" id="hero">
-  <div id="tsparticles"></div>
-  <div class="hero-content">
-    <h1>Premium Quality <span id="typed-text"></span></h1>
-    <p>Trusted by 300+ customers across India | Fast Delivery | Best Prices</p>
-    <button class="cta-hero" onclick="orderNow('Premium Materials')">
-      <i class="fab fa-whatsapp"></i> Order Now
-    </button>
-  </div>
-</section>
-
-<!-- Stats Section -->
-<section class="stats">
-  <div class="stat-item">
-    <div class="stat-number" data-target="350">0</div>
-    <div class="stat-label">Happy Customers</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-number" data-target="500">0</div>
-    <div class="stat-label">Orders Delivered</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-number" data-target="24">0</div>
-    <div class="stat-label">Hours Service</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-number" data-target="100">0</div>
-    <div class="stat-label">Cities Served</div>
-  </div>
-</section>
-
-<!-- Products Section -->
-<section class="grid" id="products">
-  <h2 class="section-title">🔥 Featured Products</h2>
-</section>
-
-<!-- Reviews Section -->
-<section class="reviews" id="reviews">
-  <h2 class="section-title">⭐ What Customers Say</h2>
-  <div class="review-grid" id="reviewGrid"></div>
-</section>
-
-<!-- Contact Section -->
-<section id="contact" style="padding:5rem 5%;text-align:center;background:rgba(26,26,26,0.8);">
-  <h2 class="section-title">Ready to Order?</h2>
-  <p style="font-size:1.3rem;color:#ccc;margin-bottom:2rem;">
-    Contact us anytime - We're here 24/7!
-  </p>
-  <div style="display:flex;justify-content:center;gap:2rem;flex-wrap:wrap;">
-    <a href="mailto:anshisgood97@gmail.com" class="cta-float" style="background:var(--gradient2);color:#fff;">
-      <i class="fas fa-envelope"></i><br>Email
-    </a>
-    <div class="cta-float" onclick="callNow()">
-      <i class="fas fa-phone"></i><br>Call Now
+  <div class="hero-bg"></div>
+  <div style="position:relative;z-index:2;">
+    <div class="hero-tag">Trusted Raw Material Supplier — Since 2018</div>
+    <h1>Premium Materials,<br><em>Unbeatable</em> Prices</h1>
+    <p class="hero-sub">Bulk raw materials delivered fast across India. Fabric, chemicals, electronics, spices — all in one place.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="orderNow('General Inquiry')">Order on WhatsApp →</button>
+      <button class="btn-outline" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Browse Products</button>
     </div>
-    <div class="cta-float" onclick="orderNow('Quick Inquiry')" style="background:var(--gradient);color:#000;">
-      <i class="fab fa-whatsapp"></i><br>WhatsApp
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num" id="ctr">0</div>
+        <div class="stat-label">Happy Customers</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">4</div>
+        <div class="stat-label">Product Categories</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">24/7</div>
+        <div class="stat-label">Support Available</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">PAN</div>
+        <div class="stat-label">India Delivery</div>
+      </div>
     </div>
   </div>
+  <div class="hero-divider"></div>
 </section>
 
-<!-- Enhanced Floating CTAs -->
-<div class="cta-float" onclick="orderNow('Top Seller')" style="bottom:30%;background:var(--gradient);color:#000;">
-  <i class="fas fa-shopping-cart"></i><br>Quick Order
-</div>
-<div class="cta-float" onclick="toggleChat()" style="bottom:20%;">
-  <i class="fas fa-comments"></i><br>Live Chat
+<!-- Marquee -->
+<div class="marquee-wrap">
+  <div class="marquee-track" id="marqueeTrack">
+    <span>300+ Happy Customers</span><span class="marquee-dot">✦</span>
+    <span>Fast Delivery Across India</span><span class="marquee-dot">✦</span>
+    <span>Bulk Orders Welcome</span><span class="marquee-dot">✦</span>
+    <span>Quality Guaranteed</span><span class="marquee-dot">✦</span>
+    <span>24/7 Customer Support</span><span class="marquee-dot">✦</span>
+    <span>Competitive Pricing</span><span class="marquee-dot">✦</span>
+    <span>PAN India Shipping</span><span class="marquee-dot">✦</span>
+    <span>300+ Happy Customers</span><span class="marquee-dot">✦</span>
+    <span>Fast Delivery Across India</span><span class="marquee-dot">✦</span>
+    <span>Bulk Orders Welcome</span><span class="marquee-dot">✦</span>
+    <span>Quality Guaranteed</span><span class="marquee-dot">✦</span>
+    <span>24/7 Customer Support</span><span class="marquee-dot">✦</span>
+    <span>Competitive Pricing</span><span class="marquee-dot">✦</span>
+    <span>PAN India Shipping</span><span class="marquee-dot">✦</span>
+  </div>
 </div>
 
-<!-- Enhanced Chatbot -->
-<div id="chatbot">
+<!-- Products -->
+<section id="products">
+  <div class="products-header">
+    <div>
+      <div class="section-label">Our Catalogue</div>
+      <div class="section-heading">Raw Materials<br>You Can Rely On</div>
+    </div>
+    <button class="btn-outline" onclick="orderNow('Bulk Order')">Request Bulk Quote →</button>
+  </div>
+  <div class="products-grid" id="productsGrid"></div>
+</section>
+
+<!-- About -->
+<div class="about-band" id="about">
+  <div class="about-text">
+    <div class="section-label">Who We Are</div>
+    <div class="section-heading">India's Trusted Raw Material Partner</div>
+    <p>We source, verify, and deliver premium raw materials to manufacturers, traders, and businesses across India. Every product is quality-checked before dispatch.</p>
+    <div class="about-features">
+      <div class="feature-row">
+        <div class="feature-icon">🔬</div>
+        <div class="feature-text">
+          <strong>Quality Tested</strong>
+          <span>Every batch inspected before shipping</span>
+        </div>
+      </div>
+      <div class="feature-row">
+        <div class="feature-icon">📦</div>
+        <div class="feature-text">
+          <strong>Bulk Ready</strong>
+          <span>Custom packaging for large orders</span>
+        </div>
+      </div>
+      <div class="feature-row">
+        <div class="feature-icon">🚚</div>
+        <div class="feature-text">
+          <strong>Fast Dispatch</strong>
+          <span>Orders shipped within 24–48 hours</span>
+        </div>
+      </div>
+      <div class="feature-row">
+        <div class="feature-icon">💬</div>
+        <div class="feature-text">
+          <strong>Dedicated Support</strong>
+          <span>Direct WhatsApp and call support always</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="about-img">
+    <img src="https://images.pexels.com/photos/4481258/pexels-photo-4481258.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Warehouse">
+  </div>
+</div>
+
+<!-- Process -->
+<section>
+  <div class="section-label">How It Works</div>
+  <div class="section-heading">Order in 3 Simple Steps</div>
+  <div class="process-grid">
+    <div class="process-step">
+      <div class="step-num">01</div>
+      <div class="step-title">Choose Your Product</div>
+      <div class="step-desc">Browse our catalogue and select the raw material you need.</div>
+    </div>
+    <div class="process-step">
+      <div class="step-num">02</div>
+      <div class="step-title">Message on WhatsApp</div>
+      <div class="step-desc">Share quantity, location, and budget. We respond within minutes.</div>
+    </div>
+    <div class="process-step">
+      <div class="step-num">03</div>
+      <div class="step-title">Confirm & Receive</div>
+      <div class="step-desc">Confirm the order, pay securely, and we'll ship within 48 hours.</div>
+    </div>
+    <div class="process-step" style="border-right:none;">
+      <div class="step-num">04</div>
+      <div class="step-title">Reorder Anytime</div>
+      <div class="step-desc">Enjoy priority pricing and faster processing as a returning buyer.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Reviews -->
+<section id="reviews" style="background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="section-label">What Buyers Say</div>
+  <div class="section-heading">300+ Verified Reviews<br>Across India</div>
+  <div class="reviews-grid" id="reviewsGrid"></div>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+  <div class="contact-wrap">
+    <div>
+      <div class="section-label">Get In Touch</div>
+      <div class="section-heading">Let's Talk<br>Business</div>
+      <p style="color:var(--text-muted);margin-top:20px;font-size:14px;">Reach us on any platform — we're available 24/7 to handle your order or answer questions.</p>
+      <div class="contact-links">
+        <a href="https://wa.me/919026475553" class="contact-link" target="_blank">
+          <span class="contact-link-icon">💬</span>
+          <div class="contact-link-text">
+            <strong>WhatsApp</strong>
+            <span>+91 90264 75553 — fastest response</span>
+          </div>
+        </a>
+        <a href="tel:9026475553" class="contact-link">
+          <span class="contact-link-icon">📞</span>
+          <div class="contact-link-text">
+            <strong>Call Direct</strong>
+            <span>9026475553 — 9am to 9pm daily</span>
+          </div>
+        </a>
+        <a href="mailto:anshisgood97@gmail.com" class="contact-link">
+          <span class="contact-link-icon">✉️</span>
+          <div class="contact-link-text">
+            <strong>Email</strong>
+            <span>anshisgood97@gmail.com</span>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div>
+      <div class="contact-form">
+        <div class="form-group">
+          <label class="form-label">Your Name</label>
+          <input class="form-input" id="cf-name" type="text" placeholder="Ravi Kumar">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone / WhatsApp</label>
+          <input class="form-input" id="cf-phone" type="tel" placeholder="+91 98765 43210">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Product & Quantity</label>
+          <input class="form-input" id="cf-product" type="text" placeholder="Fabric Rolls — 200 meters">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Message</label>
+          <textarea class="form-input" id="cf-msg" placeholder="Delivery location, timeline, budget..."></textarea>
+        </div>
+        <button class="btn-primary" onclick="submitContactForm()" style="width:100%;margin-top:4px;">Send via WhatsApp →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Float actions -->
+<div class="float-actions">
+  <div class="fab" onclick="toggleChat()">💬<span class="fab-tooltip">Live Chat</span></div>
+  <div class="fab" onclick="callNow()">📞<span class="fab-tooltip">Call Now</span></div>
+  <div class="fab" onclick="orderNow('General Inquiry')">💚<span class="fab-tooltip">WhatsApp</span></div>
+  <div class="fab" onclick="openTelegram()">✈️<span class="fab-tooltip">Telegram</span></div>
+</div>
+
+<!-- Chatbot -->
+<div class="chatbot-wrap" id="chatbot">
+  <div class="chatbot-header">
+    <div class="chatbot-header-left">
+      <div class="chatbot-dot"></div>
+      <span class="chatbot-title">MyBrand Support</span>
+    </div>
+    <button class="chatbot-close" onclick="toggleChat()">✕</button>
+  </div>
+  <div class="chat-messages" id="chatMessages">
+    <div class="msg-bot">👋 Hello! Welcome to MyBrand. How can I help you today?</div>
+    <div class="msg-bot">I can help you with product info, pricing, bulk orders, or delivery details.</div>
+  </div>
+  <div class="chat-input-wrap">
+    <input class="chat-input" id="chatInput" placeholder="Type your question..." onkeydown="if(event.key==='Enter')sendChat()">
+    <button class="chat-send" onclick="sendChat()">↑</button>
+  </div>
+</div>
+
+<!-- Live popup -->
+<div class="live-popup" id="livePopup">
+  <span class="popup-icon">🔥</span>
+  <span id="popupText"></span>
+</div>
+
+<!-- Sticky bar -->
+<div class="sticky-bar" onclick="orderNow('General Inquiry')">💬 Place Your Order on WhatsApp — Fast & Easy</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">MyBrand</div>
+      <p class="footer-desc">Premium raw material supplier serving businesses across India. Quality products, honest pricing, fast delivery.</p>
+    </div>
+    <div>
+      <div class="footer-heading">Products</div>
+      <div class="footer-links">
+        <a href="#" onclick="orderNow('Fabric Rolls');return false;">Fabric Rolls</a>
+        <a href="#" onclick="orderNow('Industrial Chemicals');return false;">Industrial Chemicals</a>
+        <a href="#" onclick="orderNow('Gadgets & Electronics');return false;">Gadgets & Electronics</a>
+        <a href="#" onclick="orderNow('Spices & Ingredients');return false;">Spices & Ingredients</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-heading">Contact</div>
+      <div class="footer-links">
+        <a href="tel:9026475553">📞 9026475553</a>
+        <a href="mailto:anshisgood97@gmail.com">✉️ anshisgood97@gmail.com</a>
+        <a href="https://wa.me/919026475553" target="_blank">💬 WhatsApp Order</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 MyBrand. All rights reserved.</span>
+    <span>Made with care — trusted across India 🇮🇳</span>
+  </div>
+</footer>
+
+<script>
+/* ── CURSOR ── */
+const dot = document.getElementById('curDot');
+const ring = document.getElementById('curRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px';});
+(function animRing(){rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing);})();
+
+/* ── HEADER SCROLL ── */
+const header=document.getElementById('header');
+const topbar=document.getElementById('topbar');
+window.addEventListener('scroll',()=>{
+  const s=window.scrollY;
+  if(s>80){header.classList.add('scrolled');}else{header.classList.remove('scrolled');}
+});
+
+/* ── COUNTER ANIMATION ── */
+function animCount(el,target,duration){
+  let start=0,step=target/((duration/16));
+  let t=setInterval(()=>{start+=step;if(start>=target){el.textContent=target+'+';clearInterval(t);}else{el.textContent=Math.floor(start)+'+';}},16);
+}
+const ctrEl=document.getElementById('ctr');
+let counted=false;
+const obs=new IntersectionObserver(entries=>{if(entries[0].isIntersecting&&!counted){animCount(ctrEl,300,1200);counted=true;}});
+obs.observe(ctrEl);
+
+/* ── PRODUCTS ── */
+const products=[
+  {name:"Fabric Rolls",cat:"Textiles",tag:"Best Seller",img:"https://images.pexels.com/photos/3812444/pexels-photo-3812444.jpeg?auto=compress&cs=tinysrgb&w=600",desc:"Premium-grade fabric rolls for garment manufacturers. Available in bulk."},
+  {name:"Industrial Chemicals",cat:"Chemicals",tag:"High Demand",img:"https://images.pexels.com/photos/4031813/pexels-photo-4031813.jpeg?auto=compress&cs=tinysrgb&w=600",desc:"Certified industrial-grade chemicals for manufacturing and processing."},
+  {name:"Gadgets & Electronics",cat:"Electronics",tag:"",img:"https://images.pexels.com/photos/1092671/pexels-photo-1092671.jpeg?auto=compress&cs=tinysrgb&w=600",desc:"Wholesale consumer electronics and components at competitive rates."},
+  {name:"Spices & Ingredients",cat:"Food Grade",tag:"New",img:"https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=600",desc:"Food-grade spices and ingredients, hygienically packed for bulk buyers."}
+];
+const grid=document.getElementById('productsGrid');
+products.forEach((p,i)=>{
+  const d=document.createElement('div');
+  d.className='product-card';
+  d.style.transitionDelay=(i*0.1)+'s';
+  d.innerHTML=`<div class="card-img"><img src="${p.img}" alt="${p.name}" loading="lazy">${p.tag?`<div class="card-badge">${p.tag}</div>`:''}</div><div class="card-body"><div class="card-category">${p.cat}</div><div class="card-title">${p.name}</div><div class="card-desc">${p.desc}</div><div class="card-footer"><span class="card-tag">Bulk orders welcome</span><button class="card-btn" onclick="orderNow('${p.name}')">Order →</button></div></div>`;
+  grid.appendChild(d);
+});
+
+/* ── SCROLL REVEAL ── */
+const revealObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});
+document.querySelectorAll('.product-card,.review-card').forEach(el=>revealObs.observe(el));
+
+/* ── REVIEWS ── */
+const reviews=[
+  {name:"Ravi S.",city:"Delhi",msg:"Quality is excellent — exactly what I needed for bulk production. Delivery was faster than promised.",init:"RS"},
+  {name:"Aman K.",city:"Mumbai",msg:"Placed a bulk order of fabric. Got great rates and the packaging was professional. Will reorder.",init:"AK"},
+  {name:"Priya M.",city:"Lucknow",msg:"Super helpful team. They guided me through the order and shipped the same day. Highly recommend.",init:"PM"},
+  {name:"Siddharth R.",city:"Jaipur",msg:"Been ordering industrial chemicals for 6 months now. Quality is consistent and pricing is transparent.",init:"SR"},
+  {name:"Neha T.",city:"Surat",msg:"First-time buyer and the experience was very smooth. Product was exactly as described.",init:"NT"},
+  {name:"Vikram P.",city:"Ahmedabad",msg:"The spices are food-grade quality. Perfect for our restaurant supply chain. Great value.",init:"VP"},
+];
+const rg=document.getElementById('reviewsGrid');
+reviews.forEach((r,i)=>{
+  const d=document.createElement('div');
+  d.className='review-card';
+  d.style.transitionDelay=(i*0.08)+'s';
+  d.innerHTML=`<div class="review-stars">★★★★★</div><div class="review-text">"${r.msg}"</div><div class="reviewer-row"><div class="reviewer-avatar">${r.init}</div><div><div class="reviewer-name">${r.name}</div><div class="reviewer-city">${r.city} &nbsp; <span class="verified">✔ Verified</span></div></div></div>`;
+  rg.appendChild(d);
+});
+
+/* ── LIVE POPUP ── */
+const pnames=["Aman","Ravi","Priya","Siddharth","Neha","Vikram"];
+const pcities=["Delhi","Mumbai","Lucknow","Jaipur","Surat","Ahmedabad"];
+const ppops=document.getElementById('livePopup');
+const ptxt=document.getElementById('popupText');
+setInterval(()=>{
+  const n=pnames[Math.floor(Math.random()*pnames.length)];
+  const c=pcities[Math.floor(Math.random()*pcities.length)];
+  const p=products[Math.floor(Math.random()*products.length)].name;
+  ptxt.textContent=`${n} from ${c} just ordered ${p}`;
+  ppops.style.display='flex';
+  setTimeout(()=>ppops.style.display='none',3500);
+},7000);
+
+/* ── CHAT ── */
+function toggleChat(){const c=document.getElementById('chatbot');c.style.display=c.style.display==='flex'?'none':'flex';}
+function sendChat(){
+  const inp=document.getElementById('chatInput');
+  const msg=inp.value.trim();if(!msg)return;
+  const chat=document.getElementById('chatMessages');
+  const u=document.createElement('div');u.className='msg-user';u.textContent=msg;chat.appendChild(u);
+  inp.value='';chat.scrollTop=chat.scrollHeight;
+  setTimeout(()=>{
+    const b=document.createElement('div');b.className='msg-bot';
+    const lower=msg.toLowerCase();
+    if(lower.includes('price')||lower.includes('rate')||lower.includes('cost'))b.textContent='Our pricing depends on product and quantity. Message us on WhatsApp for a custom quote — we respond within minutes.';
+    else if(lower.includes('deliv')||lower.includes('ship'))b.textContent='We deliver PAN India, typically within 48–72 hours of order confirmation.';
+    else if(lower.includes('bulk'))b.textContent='Yes! We specialise in bulk orders. Share your requirements on WhatsApp and we\'ll give you the best rate.';
+    else b.innerHTML='Thanks for reaching out! For quickest help, WhatsApp us at <strong>9026475553</strong>. We reply in minutes.';
+    chat.appendChild(b);chat.scrollTop=chat.scrollHeight;
+  },700);
+}
+
+/* ── CONTACT FORM ── */
+function submitContactForm(){
+  const name=document.getElementById('cf-name').value.trim();
+  const phone=document.getElementById('cf-phone').value.trim();
+  const product=document.getElementById('cf-product').value.trim();
+  const msg=document.getElementById('cf-msg').value.trim();
+  const text=`Hello MyBrand! 👋\n\nName: ${name||'—'}\nPhone: ${phone||'—'}\nProduct/Qty: ${product||'—'}\nMessage: ${msg||'—'}`;
+  window.open('https://wa.me/919026475553?text='+encodeURIComponent(text),'_blank');
+}
+
+/* ── ACTIONS ── */
+function orderNow(p){window.open('https://wa.me/919026475553?text='+encodeURIComponent(`Hello MyBrand! I want to order:\nProduct: ${p}\nQuantity:\nDelivery Location:\nBudget:`),'_blank');}
+function callNow(){window.location.href='tel:9026475553';}
+function openTelegram(){window.open('https://t.me/MyBrandco','_blank');}
+
+/* ── MOBILE MENU ── */
+function openMenu(){document.getElementById('mobileMenu').classList.add('open');document.body.style.overflow='hidden';}
+function closeMenu(){document.getElementById('mobileMenu').classList.remove('open');document.body.style.overflow='';}
+</script>
+</body>
+</html>
